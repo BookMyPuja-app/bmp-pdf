@@ -1,7 +1,7 @@
 {
   "name": "@bookmypuja-tech/bmp-pdf",
   "description": "PDF Report Generation for Temple360 and T-360 by BookMyPuja",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,7 +13,7 @@
     "url": "https://github.com/BookMyPuja-app/bmp-pdf"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format esm --dts"
+    "build": "tsup src/index.tsx --format esm --dts"
   },
   "keywords": [
     "pdf",

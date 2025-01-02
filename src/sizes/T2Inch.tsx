@@ -8,8 +8,8 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer";
-import { formatDate } from "./functions";
-import { IPrintablePuja } from "./types";
+import { formatDate } from "../functions";
+import { IPrintablePuja } from "../types";
 
 const bmpLogo = "https://files.20022005.xyz/bmp-blacked.png";
 const robotoNormal = "https://files.20022005.xyz/Roboto-Regular.ttf";
@@ -26,23 +26,26 @@ Font.register({
   src: robotoBold,
 });
 
+const globalFontSize = 30;
+
 const styles = StyleSheet.create({
   page: {
-    padding: 30,
+    padding: 10,
     fontFamily: "Roboto",
   },
   pujaTile: {
-    padding: 10,
-    fontSize: 9,
-    border: "1px solid rgb(100,100,100)",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    fontSize: globalFontSize,
+    border: "5px solid black",
     borderRadius: 5,
     width: "100%",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
   },
 });
 
-const A4Print = ({
+const T2Inch = ({
   data,
   dates,
 }: {
@@ -52,19 +55,20 @@ const A4Print = ({
   const isSingleDate = formatDate(dates[0]) === formatDate(dates[1]);
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page dpi={200} size={[457]} style={styles.page}>
         <Image
           fixed={true}
           style={{
-            height: 15,
-            width: 80,
+            height: 55,
+            width: 280,
             marginBottom: 10,
+            marginHorizontal: "auto",
           }}
           src={bmpLogo}
 
         />
-        <Text style={{ fontSize: 13, marginBottom: 2 }}>Puja List</Text>
-        <Text style={{ fontSize: 10, marginBottom: 10 }}>
+        <Text style={{ fontSize: 25, marginBottom: 5, marginHorizontal: "auto" }}>Puja List</Text>
+        <Text style={{ fontSize: 20, marginBottom: 20, marginHorizontal: "auto", fontWeight: "bold" }}>
           {"Date"}:{" "}
           {isSingleDate
             ? formatDate(dates[0])
@@ -106,20 +110,20 @@ const A4Print = ({
                           gap: 3,
                         }}
                       >
-                        <Text style={{ fontSize: 10, fontWeight: "bold" }}>
+                        <Text style={{ fontSize: globalFontSize, fontWeight: "bold" }}>
                           {item.participantName}
                         </Text>
-                        <Text style={{ fontSize: 10, fontWeight: "bold" }}>
+                        <Text style={{ fontSize: globalFontSize, fontWeight: "bold" }}>
                           -
                         </Text>
-                        <Text style={{ fontSize: 10, fontWeight: "bold" }}>
+                        <Text style={{ fontSize: globalFontSize, fontWeight: "bold" }}>
                           {item.participantNakshatra}
                         </Text>
                       </View>
                       <View
                         style={{
                           display: "flex",
-                          flexDirection: "row",
+                          flexDirection: "column",
                           alignContent: "flex-end",
                           gap: 10,
                         }}
@@ -132,7 +136,7 @@ const A4Print = ({
                           }}
                         >
                           <Text>Puja name : </Text>
-                          <Text style={{ fontSize: 10, fontWeight: "bold" }}>
+                          <Text style={{ fontSize: globalFontSize, fontWeight: "bold" }}>
                             {item.pujaName}
                           </Text>
                         </View>
@@ -179,9 +183,10 @@ const A4Print = ({
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "flex-end",
+                        marginTop: 10,
                       }}
                     >
-                      <Text style={{ fontWeight: "bold", fontSize: 10 }}>
+                      <Text style={{ fontWeight: "bold", fontSize: globalFontSize }}>
                         Rs {item.amount}
                       </Text>
                       {item.paymentStatus == "pending" ? (
@@ -197,7 +202,7 @@ const A4Print = ({
                           <Text
                             style={{
                               color: "#ffffff",
-                              fontSize: 8,
+                              fontSize: globalFontSize,
                             }}
                           >
                             Pending
@@ -215,4 +220,4 @@ const A4Print = ({
   );
 };
 
-export default A4Print;
+export default T2Inch;
