@@ -1,5 +1,6 @@
 /src
 /node_modules
+/web-view
 
 .env
 .DB_Store

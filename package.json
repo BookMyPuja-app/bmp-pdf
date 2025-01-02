@@ -27,5 +27,11 @@
   "devDependencies": {
     "tsup": "^8.3.5",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "^4.1.6",
+    "install": "^0.13.0",
+    "npm": "^11.0.0",
+    "react": "^19.0.0"
   }
 }
