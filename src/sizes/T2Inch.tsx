@@ -13,7 +13,7 @@ import { IPrintablePuja } from "../types";
 import { bmpLogo, robotoBold, robotoNormal } from "../constants";
 
 
-const scalingFactor = 5;
+const scalingFactor = 1;
 
 Font.register({
   family: "Roboto",
