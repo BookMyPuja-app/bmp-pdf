@@ -1,4 +1,4 @@
-import Template from "../../src/sizes/T2Inch";
+import Template from "../../src/sizes/A4Print";
 import { PDFViewer } from '@react-pdf/renderer'
 import './App.css'
 import { IPrintablePuja } from "../../src/types";
