@@ -15,6 +15,9 @@ const bmpLogo = "https://files.20022005.xyz/bmp-blacked.png";
 const robotoNormal = "https://files.20022005.xyz/Roboto-Regular.ttf";
 const robotoBold = "https://files.20022005.xyz/Roboto-Bold.ttf";
 
+
+const scalingFactor = 5;
+
 Font.register({
   family: "Roboto",
   fontWeight: "normal",
@@ -26,19 +29,19 @@ Font.register({
   src: robotoBold,
 });
 
-const globalFontSize = 30;
+const globalFontSize = 25 * scalingFactor;
 
 const styles = StyleSheet.create({
   page: {
-    padding: 10,
+    padding: 10 * scalingFactor,
     fontFamily: "Roboto",
   },
   pujaTile: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingVertical: 10 * scalingFactor,
+    paddingHorizontal: 10 * scalingFactor,
     fontSize: globalFontSize,
-    border: "5px solid black",
-    borderRadius: 5,
+    border: `${5 * scalingFactor}px solid black`,
+    borderRadius: 5 * scalingFactor,
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -55,24 +58,27 @@ const T2Inch = ({
   const isSingleDate = formatDate(dates[0]) === formatDate(dates[1]);
   return (
     <Document>
-      <Page dpi={200} size={[457]} style={styles.page}>
+      <Page dpi={200} size={[457 * scalingFactor]} style={styles.page}>
         <Image
           fixed={true}
           style={{
-            height: 55,
-            width: 280,
-            marginBottom: 10,
+            height: 55 * scalingFactor,
+            width: 280 * scalingFactor,
+            marginBottom: 10 * scalingFactor,
             marginHorizontal: "auto",
           }}
           src={bmpLogo}
 
         />
-        <Text style={{ fontSize: 25, marginBottom: 5, marginHorizontal: "auto" }}>Puja List</Text>
-        <Text style={{ fontSize: 20, marginBottom: 20, marginHorizontal: "auto", fontWeight: "bold" }}>
+        <Text style={{ fontSize: 25  * scalingFactor, marginBottom: 5 * scalingFactor, marginHorizontal: "auto" }}>Puja List</Text>
+        <Text style={{ fontSize: 20 * scalingFactor, marginBottom: 5 * scalingFactor, marginHorizontal: "auto", fontWeight: "bold" }}>
           {"Date"}:{" "}
           {isSingleDate
             ? formatDate(dates[0])
             : `${formatDate(dates[0])} - ${formatDate(dates[1])}`}
+        </Text>
+        <Text style={{ fontSize: 17 * scalingFactor, marginBottom: 20 * scalingFactor, marginHorizontal: "auto"}}>
+          Printed at : {new Date().toLocaleString()}
         </Text>
         <View
           style={{
@@ -80,22 +86,54 @@ const T2Inch = ({
             flexDirection: "row",
             flexWrap: "wrap",
             justifyContent: "space-between",
-            gap: 8,
+            gap: 15 * scalingFactor,
           }}
         >
           {data
             ? data.map((item, index) => {
                 return (
                   <View wrap={false} key={index} style={styles.pujaTile}>
-                    <View style={{ display: "flex", flexDirection: "row" }}>
+                    <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", marginBottom: 5 * scalingFactor }}>
                       <Text
                         style={{
                           opacity: 0.6,
-                          marginRight: 10,
+                          marginRight: 10 * scalingFactor,
                         }}
                       >
                         #{(index + 1).toString().padStart(2, "0")}
                       </Text>
+                      <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "flex-end",
+                        gap: 10 * scalingFactor,
+                      }}
+                    >
+                      {item.paymentStatus == "pending" ? (
+                        <View
+                          style={{
+                            backgroundColor: "#000000",
+                            paddingVertical: 3 * scalingFactor,
+                            paddingHorizontal: 5 * scalingFactor,
+                            borderRadius: 5 * scalingFactor,
+                            marginTop: 3 * scalingFactor,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "#ffffff",
+                              fontSize: globalFontSize,
+                            }}
+                          >
+                            Pending
+                          </Text>
+                        </View>
+                      ) : null}
+                      <Text style={{ fontWeight: "bold", fontSize: globalFontSize }}>
+                        Rs {item.amount}
+                      </Text>
+                    </View>
                     </View>
                     <View
                       style={{
@@ -106,11 +144,12 @@ const T2Inch = ({
                         style={{
                           display: "flex",
                           flexDirection: "row",
-                          marginBottom: 3,
-                          gap: 3,
+                          flexWrap: "wrap",
+                          marginBottom: 3 * scalingFactor,
+                          gap: 3 * scalingFactor,
                         }}
                       >
-                        <Text style={{ fontSize: globalFontSize, fontWeight: "bold" }}>
+                        <Text style={{ fontSize: globalFontSize, fontWeight: "bold",  }}>
                           {item.participantName}
                         </Text>
                         <Text style={{ fontSize: globalFontSize, fontWeight: "bold" }}>
@@ -125,13 +164,14 @@ const T2Inch = ({
                           display: "flex",
                           flexDirection: "column",
                           alignContent: "flex-end",
-                          gap: 10,
+                          gap: 10 * scalingFactor,
                         }}
                       >
                         <View
                           style={{
                             display: "flex",
                             flexDirection: "row",
+                            flexWrap: "wrap",
                             alignContent: "flex-end",
                           }}
                         >
@@ -160,7 +200,7 @@ const T2Inch = ({
                           display: "flex",
                           flexDirection: "row",
                           alignContent: "flex-end",
-                          gap: 10,
+                          gap: 10 * scalingFactor,
                         }}
                       ></View>
                       {item.priestNote !== "" &&
@@ -171,42 +211,10 @@ const T2Inch = ({
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "space-between",
-                            marginTop: 3,
+                            marginTop: 3 * scalingFactor,
                           }}
                         >
                           <Text>Priest Note: {item.priestNote}</Text>
-                        </View>
-                      ) : null}
-                    </View>
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-end",
-                        marginTop: 10,
-                      }}
-                    >
-                      <Text style={{ fontWeight: "bold", fontSize: globalFontSize }}>
-                        Rs {item.amount}
-                      </Text>
-                      {item.paymentStatus == "pending" ? (
-                        <View
-                          style={{
-                            backgroundColor: "#000000",
-                            paddingVertical: 3,
-                            paddingHorizontal: 5,
-                            borderRadius: 5,
-                            marginTop: 3,
-                          }}
-                        >
-                          <Text
-                            style={{
-                              color: "#ffffff",
-                              fontSize: globalFontSize,
-                            }}
-                          >
-                            Pending
-                          </Text>
                         </View>
                       ) : null}
                     </View>

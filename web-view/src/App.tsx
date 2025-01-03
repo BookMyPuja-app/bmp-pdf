@@ -17,8 +17,8 @@ function App() {
     }
   ,
   {
-    pujaName: "Lakshmi Puja",
-    participantName: "Ravi",
+    pujaName: "Nihar Chandrakant Hodawadekar, Mr Perfect Perfect",
+    participantName: "Nihar Chandrakant Hodawadekar",
     participantNakshatra: "Ashwini",
     paymentStatus: "pending",
     amount: 1500,
