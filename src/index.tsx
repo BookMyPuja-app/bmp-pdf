@@ -1,8 +1,9 @@
 import { pdf } from "@react-pdf/renderer";
 import A4Print from "./sizes/A4Print";
-import { IPrintablePuja } from "./types";
+import { IPrintablePuja, IReceiptData } from "./types";
 import React from "react";
 import T2Inch from "./sizes/T2Inch";
+import T2InchReceipt from "./sizes/T2InchReceipt";
 
 type sizeOptions = "A4" | "2Inch";
 
@@ -24,5 +25,10 @@ const getPrintBlob = ({
   }
 };
 
-export { getPrintBlob, T2Inch, A4Print };
+const getT2InchReceipt = ({data} : {data: IReceiptData}) => {
+  const blob = pdf(<T2InchReceipt data={data} />).toBlob();
+  return blob;
+}
+
+export { getPrintBlob, T2Inch, A4Print, getT2InchReceipt };
 export type { IPrintablePuja };

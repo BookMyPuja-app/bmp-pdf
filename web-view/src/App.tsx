@@ -1,4 +1,4 @@
-import Template from "../../src/sizes/A4Print";
+import Template from "../../src/sizes/T2InchReceipt";
 import { PDFViewer } from '@react-pdf/renderer'
 import './App.css'
 import { IPrintablePuja } from "../../src/types";
@@ -196,10 +196,12 @@ function App() {
       height: "100dvh",
       width: "100vw"
     }}>
-     <PDFViewer children={<Template data={data} dates={[(new Date("Feb 20 2005")).toISOString(), (new Date()).toISOString()]} />}  style={{width: "100%", maxWidth: "800px"}} />
+     <PDFViewer children={<Template data={{participantName: "Yash", participantNakshatra: "Rohini", pujaName: "Govind Puja", amount: 120, priestNote: "ajsk", bookingDate: new Date(), receiptNumber: 1298190819}}  />}  style={{width: "100%", maxWidth: "800px"}} />
     </div>
     </>
   )
 }
 
 export default App
+
+// data={data} dates={[(new Date("Feb 20 2005")).toISOString(), (new Date()).toISOString()]}
