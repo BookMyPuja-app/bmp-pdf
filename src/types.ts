@@ -21,8 +21,8 @@ interface IReceiptData {
   participantNakshatra: string;
   pujaName: string;
   amount: number;
-  priestNote: string;
   bookingDate: Date;
   receiptNumber: number;
+  templeName: string;
 }
 export type { IPrintablePuja, IReceiptData };

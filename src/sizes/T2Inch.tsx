@@ -60,7 +60,7 @@ const T2Inch = ({
           fixed={true}
           style={{
             height: 55 * scalingFactor,
-            width: 280 * scalingFactor,
+            width: 274 * scalingFactor,
             marginBottom: 10 * scalingFactor,
             marginHorizontal: "auto",
           }}

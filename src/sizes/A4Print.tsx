@@ -54,7 +54,7 @@ const A4Print = ({
           fixed={true}
           style={{
             height: 15,
-            width: 80,
+            width: 75,
             marginBottom: 10,
           }}
           src={bmpLogo}

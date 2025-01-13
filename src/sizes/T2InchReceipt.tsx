@@ -46,24 +46,22 @@ const T2InchReceipt = ({data}: {data : IReceiptData}) => {
   return (
     <Document>
       <Page dpi={200} size={[457 * scalingFactor]} style={styles.page}>
-        <Image
-          fixed={true}
-          style={{
-            height: 55 * scalingFactor,
-            width: 280 * scalingFactor,
-            marginBottom: 5 * scalingFactor,
-            marginHorizontal: "auto",
-          }}
-          src={bmpLogo}
-        />
         <Text style={{
-            margin: "auto",
-            fontSize: 25 * scalingFactor,
+          fontSize: 20 * scalingFactor,
+          textAlign: "center",
+          fontWeight: "bold",
+          marginBottom: 5 * scalingFactor,
+        }}>
+            {data.templeName}
+        </Text>
+        <Text style={{
+          margin: "auto",
+            fontSize: 20 * scalingFactor,
             marginBottom: 5 * scalingFactor,
         }}>Puja Booking Receipt</Text>
         <Text style={{
-            margin: "auto",
-            fontSize: 15 * scalingFactor,
+          margin: "auto",
+          fontSize: 15 * scalingFactor,
         }} >#{data.receiptNumber}</Text>
         <View style={{height: 15, width: "100%"}}></View>
         <View style={{
@@ -71,24 +69,27 @@ const T2InchReceipt = ({data}: {data : IReceiptData}) => {
             flexDirection: "column",
             width: "100%",
             gap: 10 * scalingFactor,
-        }}>
+          }}>
         <Text>Name : {data.participantName}</Text>
         <Text>Nakshatra : {data.participantNakshatra}</Text>
         <Text>Puja Name : {data.pujaName}</Text>
         <Text>Amount : ₹{String(data.amount)}</Text>
-        {
-            data.priestNote ? (
-                <>
-                <Text >Priest Note : </Text>
-                </>
-            ) : null
-        }
         <Text>Booked on : {(new Date(data.bookingDate)).toDateString()} {(new Date(data.bookingDate)).toTimeString().split(" ")[0]}</Text>
         </View>
         <View style={{
-            height: 10 * scalingFactor,
-            width: "100%"
+          height: 10 * scalingFactor,
+          width: "100%"
         }}></View>
+        <Image
+          fixed={true}
+          style={{
+            height: 30 * scalingFactor,
+            width: 149 * scalingFactor,
+            marginTop: 5 * scalingFactor,
+            marginHorizontal: "auto",
+          }}
+          src={bmpLogo}
+        />
       </Page>
     </Document>
   );
