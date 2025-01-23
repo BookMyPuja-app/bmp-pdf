@@ -3,3 +3,4 @@
 
 .env
 .DB_Store
+/archived-*

@@ -16,13 +16,16 @@ interface IPrintablePuja {
   // address: string | null;
 }
 
-interface IReceiptData {
+interface IPujaReceipt {
+  templeName: string;
+  address: string;
+  receiptNumber: Number;
+  date: Date;
+  pujaName: string;
   participantName: string;
   participantNakshatra: string;
-  pujaName: string;
-  amount: number;
-  bookingDate: Date;
-  receiptNumber: number;
-  templeName: string;
+  pujaPrice: Number;
+  status: string;
 }
-export type { IPrintablePuja, IReceiptData };
+
+export type { IPrintablePuja, IPujaReceipt };

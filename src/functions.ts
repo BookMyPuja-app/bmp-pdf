@@ -10,4 +10,10 @@ const formatDate = (date: Date | string) => {
     return date.toLocaleDateString("en-GB", options).replace(",", "");
 };
 
-export {formatDate}
+function BtPrint(printerData: string) {
+  var S = "#Intent;scheme=rawbt;";
+  var P = "package=ru.a402d.rawbtprinter;end;";
+  window.location.href = "intent:" + "base64," + printerData + S + P;
+}
+
+export {formatDate, BtPrint}

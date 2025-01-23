@@ -2,6 +2,7 @@
 /node_modules
 /web-view
 /assets
+/archived-*
 
 .env
 .DB_Store
