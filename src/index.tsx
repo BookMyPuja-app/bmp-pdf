@@ -30,7 +30,7 @@ const printReceipt = async (data: IPujaReceipt) => {
   const base64DataObject = await base64Data(data);
   var S = "#Intent;scheme=rawbt;";
   var P = "package=ru.a402d.rawbtprinter;end;";
-  window.location.href = "intent:" + "base64," + base64Data + S + P;
+  window.location.href = "intent:" + "base64," + base64DataObject + S + P;
 }
 
 export { getPrintBlob, T2Inch, A4Print, printReceipt };
