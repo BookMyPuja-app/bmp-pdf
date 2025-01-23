@@ -10,7 +10,6 @@ export default (
   </>
 );
 
-
 const T2InchReceipt = (data: IPujaReceipt) => {
   
   let paymentStatus = "Payment Pending";
