@@ -1,7 +1,16 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { Printer, Br, Line, render, Text, Row } from "react-thermal-printer";
+import {
+  Printer,
+  Br,
+  Line,
+  render,
+  Text,
+  Row,
+  Raw,
+  Cut,
+} from "react-thermal-printer";
 import { IPujaReceipt } from "../../types";
 
 export default (
@@ -10,13 +19,7 @@ export default (
   </>
 );
 
-
 const T2InchReceipt = (data: IPujaReceipt) => {
-  
-  let paymentStatus = "Payment Pending";
-  if(data.status === "confirmed"){
-    paymentStatus = "Paid";
-  }
 
   return (
     <Printer type="epson" width={32} characterSet="iso8859_15_latin9">
@@ -46,14 +49,18 @@ const T2InchReceipt = (data: IPujaReceipt) => {
       </Text>
       <Line />
       <Text>Puja: {data.pujaName}</Text>
-      <Text>Name: {data.participantName}</Text>
-      <Text>Nakshatra: {data.participantNakshatra}</Text>
+      {data.participants.map((participant, index) => {
+        return (
+          <>
+            {data.participants.length > 1 ? <Br /> : null}
+            <Text>Name: {participant.participantName}</Text>
+            <Text>Nakshatra: {participant.participantNakshatra}</Text>
+          </>
+        );
+      })}
+      {data.participants.length > 1 ? <Br /> : null}
       <Text align="right">Price: {String(data.pujaPrice)}</Text>
-      {
-        data.status ? (
-          <Text align="right">{paymentStatus}</Text>
-        ) : null
-      }
+      {data.status ? <Text align="right">{data.status}</Text> : null}
       <Line />
       <Text align="center">Thank You</Text>
       <Text align="center">bookmypuja.app</Text>
@@ -62,9 +69,9 @@ const T2InchReceipt = (data: IPujaReceipt) => {
   );
 };
 
-const base64Data = async (receiptData: IPujaReceipt) => {
+const getBase64Data = async (receiptData: IPujaReceipt) => {
   const data = await render(T2InchReceipt(receiptData));
   return btoa(String.fromCharCode.apply(null, Array.from(data)));
 };
 
-export { base64Data, T2InchReceipt };
+export { getBase64Data, T2InchReceipt };

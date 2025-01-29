@@ -22,10 +22,9 @@ interface IPujaReceipt {
   receiptNumber: Number;
   date: Date;
   pujaName: string;
-  participantName?: string;
-  participantNakshatra: string;
+  participants: {participantName?: string, participantNakshatra: string}[];
   pujaPrice: Number;
-  status?: string;
+  status?: "confirmed" | "pending" | null | undefined;
 }
 
 export type { IPrintablePuja, IPujaReceipt };

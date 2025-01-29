@@ -7,20 +7,28 @@ const ThermalBookingReceipt = () => {
     const handlePrint = () => {
         console.log('Printing...');
         printReceipt({
-            pujaName: "Sri Satyanarayana Swamy Vratham",
-            address: "Sri Satyanarayana Swamy Temple, Annavaram",
+            pujaName: "Sri Satyanarayana Swamy ",
+            address: "Annavaram, Andhra Pradesh",
             receiptNumber: 123456,
             date: new Date(),
-            participantNakshatra: "Rohini",
-            participantName: "Sri Rama",
-            pujaPrice: 1000,
+            participants: [
+                {
+                    participantName: "",
+                    participantNakshatra: "Mrunira",
+                }
+            ],
+            pujaPrice: 24000,
             templeName: "Sri Satyanarayana Swamy Temple"
         })
     }
 
     return (
         <>
-            <button onClick={handlePrint}>Print</button>
+            <div className="flex flex-col items-center justify-center h-screen">
+            <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handlePrint}>Print</button>
+            </div>
         </>
     )
 }

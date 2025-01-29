@@ -4,3 +4,5 @@ dist
 .env
 .DB_Store
 archived-*
+
+*tgz
