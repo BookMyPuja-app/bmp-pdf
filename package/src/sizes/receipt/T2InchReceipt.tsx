@@ -10,6 +10,7 @@ export default (
   </>
 );
 
+
 const T2InchReceipt = (data: IPujaReceipt) => {
   
   let paymentStatus = "Payment Pending";
@@ -48,10 +49,15 @@ const T2InchReceipt = (data: IPujaReceipt) => {
       <Text>Name: {data.participantName}</Text>
       <Text>Nakshatra: {data.participantNakshatra}</Text>
       <Text align="right">Price: {String(data.pujaPrice)}</Text>
-      <Text align="right">{paymentStatus}</Text>
+      {
+        data.status ? (
+          <Text align="right">{paymentStatus}</Text>
+        ) : null
+      }
       <Line />
       <Text align="center">Thank You</Text>
       <Text align="center">bookmypuja.app</Text>
+      <Br />
     </Printer>
   );
 };

@@ -22,10 +22,10 @@ interface IPujaReceipt {
   receiptNumber: Number;
   date: Date;
   pujaName: string;
-  participantName: string;
+  participantName?: string;
   participantNakshatra: string;
   pujaPrice: Number;
-  status: string;
+  status?: string;
 }
 
 export type { IPrintablePuja, IPujaReceipt };

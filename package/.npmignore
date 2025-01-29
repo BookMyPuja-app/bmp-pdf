@@ -1,0 +1,23 @@
+# Ignore source files
+src/
+
+# Ignore development dependencies
+node_modules/
+
+# Ignore build artifacts
+web-view/
+assets/
+archived-*
+
+# Ignore environment files
+.env
+
+# Ignore macOS metadata files
+.DS_Store
+
+# Ignore npm package tarballs
+*.tgz
+
+# Ignore TypeScript configuration files
+tsconfig.json
+tsup.config.ts
