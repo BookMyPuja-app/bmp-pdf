@@ -20,11 +20,21 @@ interface IPujaReceipt {
   templeName: string;
   address: string;
   receiptNumber: Number;
-  date: Date;
+  date?: Date | undefined | null;
+  dates?: Date[],
   pujaName: string;
   participants: {participantName?: string, participantNakshatra: string}[];
   pujaPrice: Number;
   status?: "confirmed" | "pending" | null | undefined;
 }
 
-export type { IPrintablePuja, IPujaReceipt };
+interface ITotalReceipt {
+  templeName: string;
+  address: string;
+  receiptNumber: Number;
+  numberOfPujas: Number;
+  totalAmount: Number;
+  qrContent?: string;
+}
+
+export type { IPrintablePuja, IPujaReceipt, ITotalReceipt };

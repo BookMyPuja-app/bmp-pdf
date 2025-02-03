@@ -10,8 +10,10 @@ import {
   Row,
   Raw,
   Cut,
+  QRCode,
+  Image,
 } from "react-thermal-printer";
-import { IPujaReceipt } from "../../types";
+import { IPujaReceipt, ITotalReceipt } from "../../types";
 
 export default (
   <>
@@ -19,7 +21,8 @@ export default (
   </>
 );
 
-const T2InchReceipt = (data: IPujaReceipt) => {
+const TotalReceipt2Inch = (data: ITotalReceipt) => {
+  const timeRightNow = new Date();
 
   return (
     <Printer type="epson" width={32} characterSet="iso8859_15_latin9">
@@ -27,19 +30,18 @@ const T2InchReceipt = (data: IPujaReceipt) => {
         {data.templeName}
       </Text>
       <Text align="center">{data.address}</Text>
-      <Line />
-      <Text align="center">Puja Receipt</Text>
       {data.receiptNumber ? (
-        <Text align="center">#{String(data.receiptNumber)}</Text>
+        <Text align="center">Invoice no: #{String(data.receiptNumber)}</Text>
       ) : null}
       <Text align="center">
-        {data.date.toLocaleDateString("en-US", {
+        Print:{" "}
+        {timeRightNow.toLocaleDateString("en-US", {
           month: "short",
           day: "numeric",
           year: "numeric",
         })}
         ,{" "}
-        {data.date
+        {timeRightNow
           .toLocaleTimeString("en-US", {
             hour: "numeric",
             minute: "numeric",
@@ -48,19 +50,17 @@ const T2InchReceipt = (data: IPujaReceipt) => {
           .toLowerCase()}
       </Text>
       <Line />
-      <Text>Puja: {data.pujaName}</Text>
-      {data.participants.map((participant, index) => {
-        return (
-          <>
-            {data.participants.length > 1 ? <Br /> : null}
-            <Text>Name: {participant.participantName}</Text>
-            <Text>Nakshatra: {participant.participantNakshatra}</Text>
-          </>
-        );
-      })}
-      {data.participants.length > 1 ? <Br /> : null}
-      <Text align="right">Price: {String(data.pujaPrice)}</Text>
-      {data.status ? <Text align="right">{data.status}</Text> : null}
+      <Text bold={true} align="center">
+        Booking Receipt
+      </Text>
+      <Br />
+      <Text>Total Bookings: {String(data.numberOfPujas)}</Text>
+      <Text>Total Amount: {String(data.totalAmount)}</Text>
+      <Br />
+      <Image
+        src={"https://files.20022005.xyz/praying.png"}
+        align="center"
+      />
       <Line />
       <Text align="center">Thank You</Text>
       <Text align="center">bookmypuja.app</Text>
@@ -69,9 +69,9 @@ const T2InchReceipt = (data: IPujaReceipt) => {
   );
 };
 
-const getBase64Data = async (receiptData: IPujaReceipt) => {
-  const data = await render(T2InchReceipt(receiptData));
+const getTotalReceipt2InchBase64Data = async (receiptData: ITotalReceipt) => {
+  const data = await render(TotalReceipt2Inch(receiptData));
   return btoa(String.fromCharCode.apply(null, Array.from(data)));
 };
 
-export { getBase64Data, T2InchReceipt };
+export { getTotalReceipt2InchBase64Data, TotalReceipt2Inch };

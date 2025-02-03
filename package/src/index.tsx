@@ -3,8 +3,9 @@ import A4Print from "./sizes/A4Print";
 import { IPrintablePuja } from "./types";
 import React from "react";
 import T2Inch from "./sizes/T2Inch";
-import type {IPujaReceipt} from "./types";
-import { getBase64Data } from "./sizes/receipt/T2InchReceipt";
+import type {IPujaReceipt, ITotalReceipt} from "./types";
+import { getDevoteeReceipt2InchBase64Data } from "./sizes/receipt/DevoteeReceipt2Inch";
+import { getTotalReceipt2InchBase64Data } from "./sizes/receipt/TotalReceipt2Inch";
 
 type sizeOptions = "A4" | "2Inch";
 
@@ -26,12 +27,19 @@ const getPrintBlob = ({
   }
 }
 
-const printReceipt = async (data: IPujaReceipt) => {
-  const base64DataObject = await getBase64Data(data);
+const printDevoteeReceipt2Inch = async (data: IPujaReceipt) => {
+  const base64DataObject = await getDevoteeReceipt2InchBase64Data(data);
   var S = "#Intent;scheme=rawbt;";
   var P = "package=ru.a402d.rawbtprinter;end;";
   window.location.href = "intent:" + "base64," + base64DataObject + S + P;
 }
 
-export { getPrintBlob, T2Inch, A4Print, printReceipt };
+const printTotalReceipt2Inch = async (data: ITotalReceipt) => {
+  const base64DataObject = await getTotalReceipt2InchBase64Data(data);
+  var S = "#Intent;scheme=rawbt;";
+  var P = "package=ru.a402d.rawbtprinter;end;";
+  window.location.href = "intent:" + "base64," + base64DataObject + S + P;
+}
+
+export { getPrintBlob, T2Inch, A4Print, printDevoteeReceipt2Inch, printTotalReceipt2Inch };
 export type { IPrintablePuja, IPujaReceipt };
