@@ -16,7 +16,7 @@ const ThermalBookingReceipt = () => {
                 participantName: "Raj Kumar",
                 pujaAmount: 250,
                 pujaDate: new Date(),
-                repeatCount: 1,
+                repeatCount: 0,
             },
             {
                 name: "Archana",
