@@ -9,7 +9,7 @@ import {
   View,
 } from "@react-pdf/renderer";
 import { bmpLogo, robotoBold, robotoNormal } from "../constants";
-import { IReceiptData } from "../types";
+import { IPujaReceipt } from "../types";
 
 const scalingFactor = 1;
 const globalFontSize = 25 * scalingFactor;
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const T2InchReceipt = ({data}: {data : IReceiptData}) => {
+const T2InchReceipt = ({data}: {data : IPujaReceipt}) => {
   return (
     <Document>
       <Page dpi={200} size={[457 * scalingFactor]} style={styles.page}>

@@ -37,4 +37,18 @@ interface ITotalReceipt {
   qrContent?: string;
 }
 
-export type { IPrintablePuja, IPujaReceipt, ITotalReceipt };
+interface IPujaReport {
+  templeName: string;
+  dates: [Date, Date];
+  pujas : {
+    name: string;
+    repeatCount?: Number;
+    participantName: string;
+    participantNakshatra: string;
+    pujaDate: Date;
+    pujaAmount: Number;
+    prasadam?: string;
+  }[]
+}
+
+export type { IPrintablePuja, IPujaReceipt, ITotalReceipt, IPujaReport };

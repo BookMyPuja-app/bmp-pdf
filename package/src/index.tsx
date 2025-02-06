@@ -3,9 +3,10 @@ import A4Print from "./sizes/A4Print";
 import { IPrintablePuja } from "./types";
 import React from "react";
 import T2Inch from "./sizes/T2Inch";
-import type {IPujaReceipt, ITotalReceipt} from "./types";
+import type {IPujaReceipt, IPujaReport, ITotalReceipt} from "./types";
 import { getDevoteeReceipt2InchBase64Data } from "./sizes/receipt/DevoteeReceipt2Inch";
 import { getTotalReceipt2InchBase64Data } from "./sizes/receipt/TotalReceipt2Inch";
+import { getPujaReportReceipt2InchBase64Data } from "./sizes/receipt/PujaReport2Inch";
 
 type sizeOptions = "A4" | "2Inch";
 
@@ -41,5 +42,12 @@ const printTotalReceipt2Inch = async (data: ITotalReceipt) => {
   window.location.href = "intent:" + "base64," + base64DataObject + S + P;
 }
 
-export { getPrintBlob, T2Inch, A4Print, printDevoteeReceipt2Inch, printTotalReceipt2Inch };
+const printePujaReport2Inch = async (data: IPujaReport) => {
+  const base64DataObject = await getPujaReportReceipt2InchBase64Data(data);
+  var S = "#Intent;scheme=rawbt;";
+  var P = "package=ru.a402d.rawbtprinter;end;";
+  window.location.href = "intent:" + "base64," + base64DataObject + S + P;
+}
+
+export { getPrintBlob, T2Inch, A4Print, printDevoteeReceipt2Inch, printTotalReceipt2Inch, printePujaReport2Inch };
 export type { IPrintablePuja, IPujaReceipt };
