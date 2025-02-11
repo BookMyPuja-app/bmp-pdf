@@ -60,9 +60,13 @@ const PujaReportReceipt2Inch = (data: IPujaReport) => {
         return (
           <>
             <Text>
-              {puja.name} {"("}qty:{" "}
-              {Boolean(puja.repeatCount) ? String(puja.repeatCount) : String(1)}
-              {")"}
+              {puja.name}{" "}
+              {puja.pujaQty ? (
+                <>
+                  {"("}qty: {String(puja.pujaQty)}
+                  {")"}
+                </>
+              ) : null}
             </Text>
             {puja.prasadam ? <Text>{puja.prasadam}</Text> : null}
             <Text align="right">

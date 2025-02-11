@@ -43,6 +43,7 @@ interface IPujaReport {
   pujas : {
     name: string;
     repeatCount?: Number;
+    pujaQty?: Number;
     participantName: string;
     participantNakshatra: string;
     pujaDate: Date;

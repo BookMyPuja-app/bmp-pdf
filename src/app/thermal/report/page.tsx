@@ -1,6 +1,6 @@
 "use client";
 
-import { printePujaReport2Inch, printTotalReceipt2Inch } from "../../../../package/src";
+import { printePujaReport2Inch } from "../../../../package/src";
 
 const ThermalBookingReceipt = () => {
 
