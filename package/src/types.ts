@@ -26,6 +26,7 @@ interface IPujaReceipt {
   participants: {participantName?: string, participantNakshatra: string}[];
   pujaPrice: Number;
   status?: "confirmed" | "pending" | null | undefined;
+  pujaQty?: Number;
 }
 
 interface ITotalReceipt {

@@ -24,9 +24,9 @@ const DevoteeReceipt2Inch = (data: IPujaReceipt) => {
 
   let datesArray: JSX.Element[] = [];
 
-  if (data.dates){
-    for(let i = 0; i < data.dates.length; i++){
-      if (i == data.dates.length - 1){
+  if (data.dates) {
+    for (let i = 0; i < data.dates.length; i++) {
+      if (i == data.dates.length - 1) {
         datesArray.push(
           <Text>
             {data.dates[i].toLocaleDateString("en-US", {
@@ -36,7 +36,7 @@ const DevoteeReceipt2Inch = (data: IPujaReceipt) => {
             })}
           </Text>
         );
-      }else{
+      } else {
         datesArray.push(
           <Text>
             {data.dates[i].toLocaleDateString("en-US", {
@@ -44,7 +44,7 @@ const DevoteeReceipt2Inch = (data: IPujaReceipt) => {
               day: "numeric",
               year: "numeric",
             }) + ",    "}
-            {data.dates[i+1].toLocaleDateString("en-US", {
+            {data.dates[i + 1].toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
               year: "numeric",
@@ -55,7 +55,6 @@ const DevoteeReceipt2Inch = (data: IPujaReceipt) => {
       i++;
     }
   }
-
 
   return (
     <Printer type="epson" width={32} characterSet="iso8859_15_latin9">
@@ -83,9 +82,19 @@ const DevoteeReceipt2Inch = (data: IPujaReceipt) => {
           .toLowerCase()}
       </Text>
       <Line />
-      <Text bold={true} align="center">Booking Details</Text>
+      <Text bold={true} align="center">
+        Booking Details
+      </Text>
       <Br />
-      <Text bold={true}>Puja: {data.pujaName}</Text>
+      <Text bold={true}>
+        Puja: {data.pujaName}{" "}
+        {Number(data.pujaQty) > 1 ? (
+          <>
+            {"("}qty: {String(data.pujaQty)}
+            {")"}
+          </>
+        ) : null}
+      </Text>
       {data.date ? (
         <Text>
           Puja Date:{" "}
@@ -108,16 +117,16 @@ const DevoteeReceipt2Inch = (data: IPujaReceipt) => {
       {data.participants.length > 1 ? <Br /> : null}
       <Text align="right">Price: {String(data.pujaPrice)}</Text>
       {data.status ? <Text align="right">{data.status}</Text> : null}
-      {
-        data.dates ? (
-          <>
+      {data.dates ? (
+        <>
           <Br />
-          <Text bold={true} align="center">Puja Dates</Text>
+          <Text bold={true} align="center">
+            Puja Dates
+          </Text>
           {/* <Br /> */}
-          </>
-        ) : null
-      }
-      {data.dates ? (datesArray) : null}
+        </>
+      ) : null}
+      {data.dates ? datesArray : null}
       <Line />
       <Text align="center">Thank You</Text>
       <Text align="center">bookmypuja.app</Text>
