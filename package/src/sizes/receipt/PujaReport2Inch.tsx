@@ -61,7 +61,7 @@ const PujaReportReceipt2Inch = (data: IPujaReport) => {
           <>
             <Text>
               {puja.name}{" "}
-              {puja.pujaQty ? (
+              {Number(puja.pujaQty) > 1 ? (
                 <>
                   {"("}qty: {String(puja.pujaQty)}
                   {")"}
