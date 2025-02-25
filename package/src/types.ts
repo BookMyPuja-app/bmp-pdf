@@ -19,7 +19,7 @@ interface IPrintablePuja {
 interface IPujaReceipt {
   templeName: string;
   address: string;
-  receiptNumber: Number;
+  receiptNumber: string;
   date?: Date | undefined | null;
   dates?: Date[],
   pujaName: string;
