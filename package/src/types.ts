@@ -32,7 +32,7 @@ interface IPujaReceipt {
 interface ITotalReceipt {
   templeName: string;
   address: string;
-  receiptNumber: Number;
+  receiptNumber: string;
   numberOfPujas: Number;
   totalAmount: Number;
   qrContent?: string;
