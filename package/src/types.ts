@@ -53,4 +53,16 @@ interface IPujaReport {
   }[]
 }
 
-export type { IPrintablePuja, IPujaReceipt, ITotalReceipt, IPujaReport };
+
+interface IQuickReport {
+  templeName: string;
+  receiptNumber: string;
+  pujas : {
+    name: string;
+    pujaQty?: number;
+    pujaAmount: number;
+    pujaDate: Date;
+  }[]
+}
+
+export type { IPrintablePuja, IPujaReceipt, ITotalReceipt, IPujaReport, IQuickReport };
