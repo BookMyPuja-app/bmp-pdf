@@ -8,6 +8,7 @@ const QuickPujaReceipt = () => {
         console.log("Printing...");
         printQuickPrintReceipt2Inch({
             templeName: "Sri Satyanarayana Swamy Temple",
+            address: "Annavaram, East Godavari, Andhra Pradesh",
             receiptNumber: "BMP-1444",
             pujas: [
                 {

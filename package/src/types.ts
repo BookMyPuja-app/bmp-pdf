@@ -57,6 +57,7 @@ interface IPujaReport {
 interface IQuickReport {
   templeName: string;
   receiptNumber: string;
+  address: string;
   pujas : {
     name: string;
     pujaQty?: number;
