@@ -13,6 +13,20 @@ import { getDevoteeReceipt2InchBase64Data } from "./sizes/receipt/DevoteeReceipt
 import { getTotalReceipt2InchBase64Data } from "./sizes/receipt/TotalReceipt2Inch";
 import { getPujaReportReceipt2InchBase64Data } from "./sizes/receipt/PujaReport2Inch";
 import { getQuickReceipt2InchBase64Data } from "./sizes/receipt/QuickReceipt2Inch";
+import A4KitchenReport, {
+  KitchenReportData,
+  KitchenReportProps,
+} from "./sizes/a4/A4KitchenReport";
+import A4TransactionReport, {
+  ITransactionItem,
+  ITransactionReport,
+} from "./sizes/a4/A4TransactionReport";
+import A4PrasadDelivery, { IPrasadDelivery } from "./sizes/a4/A4PrasadDelivery";
+import A4PrasadReport, { IPrasadReport } from "./sizes/a4/A4PrasadReport";
+import A4PujaList, { IPujaList } from "./sizes/a4/A4PujaList";
+import A4Summary, { ISummaryPujaList } from "./sizes/a4/A4Summary";
+import { notoSansRegular, notoSansBold, notoSansSemiBold } from "./constants";
+import { Font } from "@react-pdf/renderer";
 
 type sizeOptions = "A4" | "2Inch";
 
@@ -67,6 +81,90 @@ const printQuickPrintReceipt2Inch = async (data: IQuickReport) => {
   window.location.href = "intent:" + "base64," + base64DataObject + S + P;
 };
 
+const options = {
+  kitchen: {
+    A4: A4KitchenReport,
+  },
+  transaction: {
+    A4: A4TransactionReport,
+  },
+  "prasad-delivery": {
+    A4: A4PrasadDelivery,
+  },
+  prasad: {
+    A4: A4PrasadReport,
+  },
+  puja: {
+    A4: A4PujaList,
+  },
+  "puja-summary": {
+    A4: A4Summary,
+  },
+};
+
+type IReportOptions =
+  | "kitchen"
+  | "transaction"
+  | "prasad-delivery"
+  | "prasad"
+  | "puja"
+  | "puja-summary";
+type IReportSize = "A4";
+
+// Define types for the data expected by each report option
+type ReportDataTypes = {
+  kitchen: KitchenReportProps;
+  transaction: ITransactionReport;
+  "prasad-delivery": IPrasadDelivery;
+  prasad: IPrasadReport;
+  puja: IPujaList;
+  "puja-summary": ISummaryPujaList;
+};
+
+class reportPrinter<T extends IReportOptions> {
+  option: T;
+  size: IReportSize;
+
+  constructor(option: T, size: IReportSize) {
+    this.option = option;
+    this.size = size;
+
+    Font.register({
+      family: "Noto Sans",
+      fontWeight: "normal",
+      src: notoSansRegular,
+    });
+
+    Font.register({
+      family: "Noto Sans",
+      fontWeight: "bold",
+      src: notoSansBold,
+    });
+
+    Font.register({
+      family: "Noto Sans",
+      fontWeight: "semibold",
+      src: notoSansSemiBold,
+    });
+  }
+
+  async print(data: ReportDataTypes[T]): Promise<Blob> {
+    const ReportComponent = options[this.option][this.size];
+    const document = <ReportComponent {...(data as any)} />;
+    const blob = pdf(document).toBlob();
+    blob.then((blob) => {
+      var blobURL = URL.createObjectURL(blob);
+      if (window != null) {
+        const printWindow = window.open(blobURL, "_blank");
+        setTimeout(() => {
+          printWindow?.print();
+        }, 1000);
+      }
+    });
+    return blob;
+  }
+}
+
 export {
   getPrintBlob,
   T2Inch,
@@ -75,6 +173,16 @@ export {
   printTotalReceipt2Inch,
   printePujaReport2Inch,
   printQuickPrintReceipt2Inch,
-  getA4SummaryBlob
+  getA4SummaryBlob,
+  reportPrinter,
 };
-export type { IPrintablePuja, IPujaReceipt };
+export type {
+  IPrintablePuja,
+  IPujaReceipt,
+  KitchenReportProps as IKitchenReport,
+  ITransactionReport,
+  IPrasadDelivery,
+  IPrasadReport,
+  IPujaList as IPujaReport,
+  ISummaryPujaList as ISummaryPujaReport,
+};

@@ -1,44 +1,18 @@
-// TODO: Sort the pujas in descending order according to the count of nakshatrams participating in the puja
+// "use client";
+
+// // TODO: Sort the pujas in descending order according to the count of nakshatrams participating in the puja
 
 import React from "react";
 import {
   Page,
   Text,
   Document,
-  Font,
   StyleSheet,
   Image,
   View,
 } from "@react-pdf/renderer";
 
-import { bmpLogo, robotoBold, robotoNormal } from "../../constants";
-
-Font.register({
-  family: "Roboto",
-  fontWeight: "normal",
-  src: robotoNormal,
-});
-Font.register({
-  family: "Roboto",
-  fontWeight: "bold",
-  src: robotoBold,
-});
-
-const styles = StyleSheet.create({
-  page: {
-    padding: 30,
-    fontFamily: "Roboto",
-  },
-  pujaTile: {
-    padding: 10,
-    fontSize: 9,
-    border: "1px solid rgb(100,100,100)",
-    borderRadius: 5,
-    width: "100%",
-    display: "flex",
-    flexDirection: "row",
-  },
-});
+import { bmpLogo } from "../../constants";
 
 interface ISummaryPuja {
   name: string;
@@ -49,49 +23,21 @@ interface ISummaryPuja {
   }[];
 }
 
-const A4Summary = ({templeName, date, pujas}: {templeName:string, date: Date, pujas: ISummaryPuja[]}) => {
-//   const templeName = "Sree Meenkulathi Ammam Temple";
-//   const date = new Date();
+interface ISummaryPujaList {
+  date: Date;
+  templeName: string;
+  pujas : ISummaryPuja[];
+}
 
-//   const pujas: ISummaryPuja[] = [
-//     {
-//       name: "Pushpanjali",
-//       totalCount: 70,
-//       nakshatras: [
-//         { name: "Avottam", count: 45 },
-//         { name: "Nivedyam", count: 30 },
-//         { name: "Niramala", count: 20 },
-//         { name: "Niramala", count: 20 },
-//       ],
-//     },
-//     {
-//       name: "Ayyilum",
-//       totalCount: 70,
-//       nakshatras: [
-//         { name: "Avottam", count: 45 },
-//         { name: "Nivedyam", count: 30 },
-//         { name: "Niramala", count: 20 },
-//       ],
-//     },
-//     {
-//       name: "Gruha Pravesh",
-//       totalCount: 100,
-//       nakshatras: [
-//         { name: "Avottam", count: 45 },
-//         { name: "Nivedyam", count: 30 },
-//         { name: "Niramala", count: 20 },
-//         {
-//           name: "Niramala",
-//           count: 100,
-//         },
-//         {
-//           name: "Niramala",
-//           count: 20,
-//         },
-//       ],
-//     },
-//   ];
-
+const A4Summary = ({
+  templeName,
+  date,
+  pujas,
+}: {
+  templeName: string;
+  date: Date;
+  pujas: ISummaryPuja[];
+}) => {
   const sortedPujaList = pujas.sort((a, b) => {
     const aTotalCount = a.nakshatras.length;
     const bTotalCount = b.nakshatras.length;
@@ -100,7 +46,13 @@ const A4Summary = ({templeName, date, pujas}: {templeName:string, date: Date, pu
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page
+        size="A4"
+        style={{
+          padding: 30,
+          fontFamily: "Noto Sans",
+        }}
+      >
         <Image
           fixed={true}
           style={{
@@ -113,52 +65,117 @@ const A4Summary = ({templeName, date, pujas}: {templeName:string, date: Date, pu
         <Text style={{ fontSize: 11, marginTop: 5, textAlign: "right" }}>
           Date: {date.toDateString()}
         </Text>
-        <Text style={{ fontSize: 14, fontWeight: "bold" }}>Puja List</Text>
-        <Text style={{ fontSize: 14 }}>{`${templeName}`}</Text>
+        <Text style={{ fontSize: 14, fontWeight: "bold" }}>Puja Summary</Text>
+        <Text style={{ fontSize: 12 }}>{`${templeName}`}</Text>
         <View
           style={{
             display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "space-between",
-            gap: 10,
-            marginTop: 10,
+            flexDirection: "column",
+            marginTop: 20,
           }}
         >
           {sortedPujaList.map((item, index) => {
             return (
               <>
-                <View
-                  style={{
-                    border: "1px solid black",
-                    borderRadius: 5,
-                    padding: 10,
-                    width: "49%",
-                  }}
-                >
-                  <Text
+                <View wrap={false} style={{ marginBottom: 25 }}>
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 10,
+                        fontWeight: "bold",
+                        border: "1px solid black",
+                        padding: 6,
+                        textAlign: "center",
+                        borderBottom: "none",
+                      }}
+                    >
+                      {item.name} - {item.totalCount}
+                    </Text>
+                  </View>
+                  <View
                     style={{
-                      fontSize: 11,
-                      marginBottom: 5,
-                      fontWeight: "bold",
+                      display: "flex",
+                      flexDirection: "row",
+                      border: "1px solid black",
                     }}
                   >
-                    {`${item.name} - ${item.totalCount}`}
-                  </Text>
-                  <View style={{ marginLeft: 20 }}>
-                    {item.nakshatras.map((nakshatra) => {
-                      return (
-                        <Text
+                    <View
+                      style={{
+                        padding: 6,
+                        fontSize: 10,
+                        borderRight: "1px solid black",
+                        fontWeight: "semibold",
+                        width: "20%",
+                      }}
+                    >
+                      <Text>Sr No</Text>
+                    </View>
+                    <View
+                      style={{
+                        padding: 6,
+                        fontSize: 10,
+                        borderRight: "1px solid black",
+                        fontWeight: "semibold",
+                        width: "60%",
+                      }}
+                    >
+                      <Text>Nakshatra</Text>
+                    </View>
+                    <View
+                      style={{
+                        padding: 6,
+                        fontSize: 10,
+                        width: "20%",
+                        fontWeight: "semibold",
+                      }}
+                    >
+                      <Text>Quantity</Text>
+                    </View>
+                  </View>
+                  {item.nakshatras.map((nakshatra, nakshatraIndex) => {
+                    return (
+                      <>
+                        <View
                           style={{
-                            fontSize: 11,
-                            marginBottom: 5,
+                            display: "flex",
+                            flexDirection: "row",
+                            border: "1px solid black",
+                            borderTop: "none",
                           }}
                         >
-                          {`${nakshatra.name} - ${nakshatra.count}`}
-                        </Text>
-                      );
-                    })}
-                  </View>
+                          <View
+                            style={{
+                              padding: 6,
+                              fontSize: 10,
+                              borderRight: "1px solid black",
+                              width: "20%",
+                            }}
+                          >
+                            <Text>{nakshatraIndex + 1}</Text>
+                          </View>
+                          <View
+                            style={{
+                              padding: 6,
+                              fontSize: 10,
+                              borderRight: "1px solid black",
+                              width: "60%",
+                            }}
+                          >
+                            <Text>{nakshatra.name}</Text>
+                          </View>
+                          <View
+                            style={{
+                              padding: 6,
+                              fontSize: 10,
+                              width: "20%",
+                            }}
+                          >
+                            <Text>{nakshatra.count}</Text>
+                          </View>
+                        </View>
+                      </>
+                    );
+                  })}
                 </View>
               </>
             );
@@ -170,3 +187,4 @@ const A4Summary = ({templeName, date, pujas}: {templeName:string, date: Date, pu
 };
 
 export default A4Summary;
+export type { ISummaryPuja, ISummaryPujaList };
