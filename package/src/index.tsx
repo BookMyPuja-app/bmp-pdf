@@ -163,6 +163,14 @@ class reportPrinter<T extends IReportOptions> {
     });
     return blob;
   }
+
+  async getBlob(data: ReportDataTypes[T]): Promise<Blob> {
+    const ReportComponent = options[this.option][this.size];
+    const document = <ReportComponent {...(data as any)} />;
+    const blob = pdf(document).toBlob();
+    return blob;
+  }
+
 }
 
 export {
