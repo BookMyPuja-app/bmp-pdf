@@ -2,6 +2,7 @@ import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { bmpLogo } from "../../constants";
 
+
 interface IPrasadItem {
   invoiceNumber: string;
   devoteeName: string;
@@ -26,6 +27,25 @@ const A4PrasadDelivery = ({
   templeName: string;
   data: IPrasadItem[];
 }) => {
+
+  data = data.map((item) => {
+
+    let address = "";
+
+    try{
+      const parsedAddress = JSON.parse(item.address);
+      address = `${parsedAddress.address}, ${parsedAddress.locality}, ${parsedAddress.state} - ${parsedAddress.pincode}`;
+    }catch(e){
+      console.error("Error parsing address:", e);
+      address = item.address;
+    }
+
+    return {
+      ...item,
+      address,
+    }
+  });
+
   return (
     <Document>
       <Page size="A4" style={{ padding: 30, fontFamily: "Noto Sans" }}>
@@ -166,7 +186,9 @@ const A4PrasadDelivery = ({
                     width: "25%",
                   }}
                 >
-                  <Text>{item.address}</Text>
+                  <Text>
+                    {item.address}
+                  </Text>
                 </View>
                 <View
                   style={{
