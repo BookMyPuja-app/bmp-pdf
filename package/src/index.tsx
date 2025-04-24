@@ -27,6 +27,7 @@ import A4PujaList, { IPujaList } from "./sizes/a4/A4PujaList";
 import A4Summary, { ISummaryPujaList } from "./sizes/a4/A4Summary";
 import { notoSansRegular, notoSansBold, notoSansSemiBold } from "./constants";
 import { Font } from "@react-pdf/renderer";
+import A4CombinedReport, { CombinedReportData } from "./sizes/a4/A4CombinedReport";
 
 type sizeOptions = "A4" | "2Inch";
 
@@ -100,6 +101,9 @@ const options = {
   "puja-summary": {
     A4: A4Summary,
   },
+  "combined-repot" : {
+    A4: A4CombinedReport,
+  }
 };
 
 type IReportOptions =
@@ -108,7 +112,8 @@ type IReportOptions =
   | "prasad-delivery"
   | "prasad"
   | "puja"
-  | "puja-summary";
+  | "puja-summary"
+  | "combined-repot";
 type IReportSize = "A4";
 
 // Define types for the data expected by each report option
@@ -119,6 +124,7 @@ type ReportDataTypes = {
   prasad: IPrasadReport;
   puja: IPujaList;
   "puja-summary": ISummaryPujaList;
+  "combined-repot": CombinedReportData;
 };
 
 class reportPrinter<T extends IReportOptions> {
