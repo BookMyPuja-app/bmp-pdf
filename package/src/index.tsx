@@ -101,7 +101,7 @@ const options = {
   "puja-summary": {
     A4: A4Summary,
   },
-  "combined-repot" : {
+  "combined-report" : {
     A4: A4CombinedReport,
   }
 };
@@ -113,7 +113,7 @@ type IReportOptions =
   | "prasad"
   | "puja"
   | "puja-summary"
-  | "combined-repot";
+  | "combined-report";
 type IReportSize = "A4";
 
 // Define types for the data expected by each report option
@@ -124,7 +124,7 @@ type ReportDataTypes = {
   prasad: IPrasadReport;
   puja: IPujaList;
   "puja-summary": ISummaryPujaList;
-  "combined-repot": CombinedReportData;
+  "combined-report": CombinedReportData;
 };
 
 class reportPrinter<T extends IReportOptions> {
