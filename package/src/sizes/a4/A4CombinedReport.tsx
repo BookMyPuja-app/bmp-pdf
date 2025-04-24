@@ -20,6 +20,25 @@ const A4CombinedReport = ({
   prasadData,
   deliveryData,
 }: CombinedReportData) => {
+
+  deliveryData = deliveryData.map((item) => {
+
+    let address = "";
+
+    try{
+      const parsedAddress = JSON.parse(item.address);
+      address = `${parsedAddress.address}, ${parsedAddress.locality}, ${parsedAddress.state} - ${parsedAddress.pincode}`;
+    }catch(e){
+      console.error("Error parsing address:", e);
+      address = item.address;
+    }
+
+    return {
+      ...item,
+      address,
+    }
+  });
+
   return (
     <>
       <Document>
