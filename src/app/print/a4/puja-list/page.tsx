@@ -11,6 +11,8 @@ interface IPuja {
         nakshatra: string;
         quantity: string;
         priestNote: string;
+        is_early_reminder?: boolean; // Optional property
+        date?: string; // Optional property
     }[];
 }
 
@@ -22,7 +24,7 @@ const A4PujaListPage = () => {
         bookings: [
           { invoiceNumber: "INV-1001", devoteeName: "Rama Sharma", nakshatra: "Ashwini", quantity: "1", priestNote: "Special blessing" },
           { invoiceNumber: "INV-1002", devoteeName: "Priya Patel", nakshatra: "Bharani", quantity: "2", priestNote: "" },
-          { invoiceNumber: "INV-1002", devoteeName: "Priya Patel", nakshatra: "Bharani", quantity: "2", priestNote: "" },
+          { invoiceNumber: "INV-1002", devoteeName: "Priya Patel", nakshatra: "Bharani", quantity: "2", priestNote: "", is_early_reminder: true, date: "2023-10-01" },
         ]
       },
       {
@@ -35,7 +37,7 @@ const A4PujaListPage = () => {
         name: "Satyanarayana Puja",
         bookings: [
           { invoiceNumber: "INV-1004", devoteeName: "Ananya Singh Rajput Raman Singh Viral Nihaal Singh Gowda Virat Sinha Patel", nakshatra: "Rohini", quantity: "1", priestNote: "Family of 4" },
-          { invoiceNumber: "INV-1005", devoteeName: "Vijay Reddy", nakshatra: "Mrigashiras", quantity: "1", priestNote: "Bring prasad" }
+          { invoiceNumber: "INV-1005", devoteeName: "Vijay Reddy", nakshatra: "Mrigashiras", quantity: "1", priestNote: "Bring prasad", is_early_reminder: true, date: "2023-10-01" }
         ]
       },
       {

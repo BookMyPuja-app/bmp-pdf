@@ -10,6 +10,8 @@ interface IPuja {
     nakshatra: string;
     quantity: string;
     priestNote: string;
+    is_early_reminder?: boolean; //
+    date?: string; //
   }[];
 }
 
@@ -28,6 +30,9 @@ const A4PujaList = ({
   templeName: string;
   pujas: IPuja[];
 }) => {
+  let serialOfNormalPujas = 0;
+  let serialOfEarlyReminders = 0;
+
   return (
     <>
       <Document>
@@ -54,6 +59,9 @@ const A4PujaList = ({
             }}
           >
             {pujas.map((puja, pujaIndex) => {
+              if (puja.bookings.some((booking) => booking.is_early_reminder))
+                return null;
+              serialOfNormalPujas = 0;
               return (
                 <>
                   <View wrap={false} style={{ marginBottom: 25 }}>
@@ -135,6 +143,7 @@ const A4PujaList = ({
                       </View>
                     </View>
                     {puja.bookings.map((booking, bookingIndex) => {
+                      serialOfNormalPujas++;
                       return (
                         <>
                           <View
@@ -154,7 +163,7 @@ const A4PujaList = ({
                                 width: "10%",
                               }}
                             >
-                              <Text>{bookingIndex + 1}</Text>
+                              <Text>{serialOfNormalPujas}</Text>
                             </View>
                             <View
                               style={{
@@ -219,9 +228,7 @@ const A4PujaList = ({
                                     width: "100%",
                                   }}
                                 >
-                                  <Text>
-                                    {booking.priestNote}
-                                  </Text>
+                                  <Text>{booking.priestNote}</Text>
                                 </View>
                               )}
                             </View>
@@ -234,6 +241,137 @@ const A4PujaList = ({
               );
             })}
           </View>
+          {pujas.some((puja) =>
+            puja.bookings.some((booking) => booking.is_early_reminder)
+          ) && (
+            <>
+              <Text style={{ fontSize: 14, fontWeight: "bold", marginTop: 20 }}>
+                Early Reminders for Upcoming Pujas
+              </Text>
+
+              <View wrap={false} style={{ marginTop: 10 }}>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    border: "1px solid black",
+                  }}
+                >
+                  <View
+                    style={{
+                      padding: 6,
+                      fontSize: 10,
+                      borderRight: "1px solid black",
+                      fontWeight: "semibold",
+                      width: "10%",
+                    }}
+                  >
+                    <Text>Sr No</Text>
+                  </View>
+                  <View
+                    style={{
+                      padding: 6,
+                      fontSize: 10,
+                      borderRight: "1px solid black",
+                      fontWeight: "semibold",
+                      width: "60%",
+                    }}
+                  >
+                    <Text>Puja Name</Text>
+                  </View>
+                  <View
+                    style={{
+                      padding: 6,
+                      fontSize: 10,
+                      borderRight: "1px solid black",
+                      fontWeight: "semibold",
+                      width: "10%",
+                    }}
+                  >
+                    <Text>Qty</Text>
+                  </View>
+                  <View
+                    style={{
+                      padding: 6,
+                      fontSize: 10,
+                      borderRight: "none",
+                      fontWeight: "semibold",
+                      width: "20%",
+                    }}
+                  >
+                    <Text>Date</Text>
+                  </View>
+                </View>
+              </View>
+            </>
+          )}
+          {pujas.some((puja) =>
+            puja.bookings.some((booking) => booking.is_early_reminder)
+          )
+            ? pujas.flatMap((puja, pujaIndex) =>
+                puja.bookings
+                  .filter((booking) => booking.is_early_reminder)
+                  .map((booking, bookingIndex) => {
+                    serialOfEarlyReminders++;
+                    return (
+                      <View
+                        key={`${pujaIndex}-${bookingIndex}`}
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          border: "1px solid black",
+                          borderTop: "none",
+                        }}
+                      >
+                        <View
+                          style={{
+                            padding: 6,
+                            fontSize: 10,
+                            borderRight: "1px solid black",
+                            width: "10%",
+                          }}
+                        >
+                          <Text>{serialOfEarlyReminders}</Text>
+                        </View>
+                        <View
+                          style={{
+                            padding: 6,
+                            fontSize: 10,
+                            borderRight: "1px solid black",
+                            width: "60%",
+                          }}
+                        >
+                          <Text>{puja.name}</Text>
+                        </View>
+                        <View
+                          style={{
+                            padding: 6,
+                            fontSize: 10,
+                            borderRight: "1px solid black",
+                            width: "10%",
+                          }}
+                        >
+                          <Text>{booking.quantity}</Text>
+                        </View>
+                        <View
+                          style={{
+                            padding: 6,
+                            fontSize: 10,
+                            borderRight: "none",
+                            width: "20%",
+                          }}
+                        >
+                          <Text>
+                            {booking.date
+                              ? new Date(booking.date).toDateString()
+                              : ""}
+                          </Text>
+                        </View>
+                      </View>
+                    );
+                  })
+              )
+            : null}
         </Page>
       </Document>
     </>

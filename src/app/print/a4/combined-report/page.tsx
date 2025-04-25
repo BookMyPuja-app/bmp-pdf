@@ -1,17 +1,8 @@
 "use client";
 
 import { PDFViewer } from "@react-pdf/renderer";
-import A4PrasadDelivery from "../../../../../package/src/sizes/a4/A4PrasadDelivery";
 import A4CombinedReport from "../../../../../package/src/sizes/a4/A4CombinedReport";
 
-interface IPrasadItem {
-  invoiceNumber: string;
-  devoteeName: string;
-  pujaName: string;
-  address: string;
-  amount: number;
-  date: Date;
-}
 
 const A4PrasadDeliveryPage = () => {
   const date = new Date();
@@ -41,6 +32,9 @@ const A4PrasadDeliveryPage = () => {
           nakshatra: "Ashwini",
           quantity: "1",
           priestNote: "Special blessing",
+          is_early_reminder: true, //
+          date: "02/20/2005" //
+
         },
         {
           invoiceNumber: "INV-1002",
