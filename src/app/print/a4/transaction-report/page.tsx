@@ -9,6 +9,7 @@ interface ITransactionItem {
     invoiceNumber: string;
     bookingAmount: number;
     creditedAmount: number;
+    status?: string;
 }
 
 const A4TransactionReportPage = () => {
@@ -23,6 +24,7 @@ const A4TransactionReportPage = () => {
             invoiceNumber: "INV001",
             bookingAmount: 100,
             creditedAmount: 50,
+            status: "cancelled",
         },
         {
             date: "2023-10-02",
@@ -44,6 +46,7 @@ const A4TransactionReportPage = () => {
             invoiceNumber: "INV004",
             bookingAmount: 400,
             creditedAmount: 350,
+            status: "cancelled",
         },
         {
             date: "2023-10-05",

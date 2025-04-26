@@ -8,6 +8,7 @@ interface ITransactionItem {
   invoiceNumber: string;
   bookingAmount: number;
   creditedAmount: number;
+  status?: string;
 }
 
 interface ITransactionReport {
@@ -26,10 +27,16 @@ const A4TransactionReport = ({
   data: ITransactionItem[];
 }) => {
   const totalAmount = data.reduce((acc, item) => {
+    if (item.status === "cancelled") {
+      return acc;
+    }
     return acc + item.bookingAmount;
   }, 0);
 
   const totalCreditedAmount = data.reduce((acc, item) => {
+    if (item.status === "cancelled") {
+      return acc;
+    }
     return acc + item.creditedAmount;
   }, 0);
 
@@ -186,35 +193,55 @@ const A4TransactionReport = ({
                   >
                     <Text>{item.invoiceNumber}</Text>
                   </View>
-                  <View
-                    style={{
-                      padding: 6,
-                      borderRight: "1px solid black",
-                      width: "20%",
-                    }}
-                  >
-                    <Text>
-                      {item.bookingAmount.toLocaleString("en-IN", {
-                        maximumFractionDigits: 2,
-                        style: "currency",
-                        currency: "INR",
-                      })}
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      padding: 6,
-                      width: "20%",
-                    }}
-                  >
-                    <Text>
-                      {item.creditedAmount.toLocaleString("en-IN", {
-                        maximumFractionDigits: 2,
-                        style: "currency",
-                        currency: "INR",
-                      })}
-                    </Text>
-                  </View>
+                  {item.status == "cancelled" ? (
+                    <>
+                      <View
+                        style={{
+                          padding: 6,
+                          // borderRight: "1px solid black",
+                          width: "40%",
+                        }}
+                      >
+                        <Text
+                        style={{
+                          textAlign: "center",
+                        }}
+                        >CANCELLED</Text>
+                      </View>
+                    </>
+                  ) : (
+                    <>
+                      <View
+                        style={{
+                          padding: 6,
+                          borderRight: "1px solid black",
+                          width: "20%",
+                        }}
+                      >
+                        <Text>
+                          {item.bookingAmount.toLocaleString("en-IN", {
+                            maximumFractionDigits: 2,
+                            style: "currency",
+                            currency: "INR",
+                          })}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          padding: 6,
+                          width: "20%",
+                        }}
+                      >
+                        <Text>
+                          {item.creditedAmount.toLocaleString("en-IN", {
+                            maximumFractionDigits: 2,
+                            style: "currency",
+                            currency: "INR",
+                          })}
+                        </Text>
+                      </View>
+                    </>
+                  )}
                 </View>
               );
             })}
