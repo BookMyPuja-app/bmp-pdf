@@ -1,4 +1,4 @@
-import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Font, Image, Page, Text, View } from "@react-pdf/renderer";
 import React from "react";
 import { bmpLogo } from "../../constants";
 
@@ -149,6 +149,9 @@ const A4PujaList = ({
                             width: "60%",
                           }}
                         >
+                          {/* <TextParsedAfterDetectingLanguage> */}
+                            {/* {puja.name} */}
+                          {/* </TextParsedAfterDetectingLanguage> */}
                           <Text>{puja.name}</Text>
                         </View>
                         <View
@@ -192,7 +195,7 @@ const A4PujaList = ({
             }}
           >
             {pujas.map((puja, pujaIndex) => {
-              if (puja.bookings.some((booking) => booking.is_early_reminder))
+              if (puja.bookings.every((booking) => booking.is_early_reminder))
                 return null;
               serialOfNormalPujas = 0;
               return (
@@ -276,6 +279,7 @@ const A4PujaList = ({
                       </View>
                     </View>
                     {puja.bookings.map((booking, bookingIndex) => {
+                      if (booking.is_early_reminder) return null;
                       serialOfNormalPujas++;
                       return (
                         <>
