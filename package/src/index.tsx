@@ -95,7 +95,7 @@ const options = {
   prasad: {
     A4: A4PrasadReport,
   },
-  puja: {
+  "puja-detailed": {
     A4: A4PujaList,
   },
   "puja-summary": {
@@ -111,7 +111,7 @@ type IReportOptions =
   | "transaction"
   | "prasad-delivery"
   | "prasad"
-  | "puja"
+  | "puja-detailed"
   | "puja-summary"
   | "combined-report";
 type IReportSize = "A4";
@@ -122,7 +122,7 @@ type ReportDataTypes = {
   transaction: ITransactionReport;
   "prasad-delivery": IPrasadDelivery;
   prasad: IPrasadReport;
-  puja: IPujaList;
+  "puja-detailed": IPujaList;
   "puja-summary": ISummaryPujaList;
   "combined-report": CombinedReportData;
 };
