@@ -4,6 +4,7 @@ import { bmpLogo } from "../../constants";
 
 interface IPuja {
   name: string;
+  price: string;
   bookings: {
     invoiceNumber: string;
     devoteeName: string;
