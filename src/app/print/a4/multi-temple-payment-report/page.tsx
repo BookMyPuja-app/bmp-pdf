@@ -39,7 +39,7 @@ const MultiTemplePaymentReport = () => {
     return (
     <div>
       <PDFViewer className="w-full h-screen">
-        <A4MultiTemplePaymentReport date={date} data={data} />
+        <A4MultiTemplePaymentReport startDate={date} endDate={date} data={data} />
       </PDFViewer>
     </div>
     )

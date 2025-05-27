@@ -9,12 +9,14 @@ interface ITempleData {
 }
 
 interface IMultiTemplePaymentReport {
-  date: Date;
+  startDate: Date;
+  endDate: Date;
   data: ITempleData[];
 }
 
 const A4MultiTemplePaymentReport = ({
-  date,
+  startDate,
+  endDate,
   data,
 }: IMultiTemplePaymentReport) => {
   return (
@@ -30,7 +32,7 @@ const A4MultiTemplePaymentReport = ({
           src={bmpLogo}
         />
         <Text style={{ fontSize: 11, marginTop: 5, textAlign: "right" }}>
-          Date: {date.toDateString()}
+          Date: {startDate.toDateString()} - {endDate.toDateString()}
         </Text>
         <Text style={{ fontSize: 14, fontWeight: "bold" }}>
           Temple Payment Report
