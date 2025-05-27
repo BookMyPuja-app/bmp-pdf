@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { reportPrinter } from "../../../../package/src";
+import { title } from "process";
 
 const A4 = () => {
   const links = [
@@ -29,29 +30,33 @@ const A4 = () => {
       title: "Prasad Delivery",
       href: "/print/a4/prasad-delivery",
     },
+    {
+      title: "Multi Temple - Payment Report",
+      href: "/print/a4/multi-temple-payment-report",
+    }
   ];
 
-  useEffect(() => {
-    const printer = new reportPrinter("puja", "A4");
-    printer.print({
-      templeName: "Test Temple",
-      date: new Date(),
-      pujas:[
-        {
-          bookings: [
-            {
-              devoteeName: "John Doe",
-              invoiceNumber: "INV123",
-              nakshatra: "Ashwini",
-              priestNote: "Priest Note",
-              quantity: "12",
-            }
-          ],
-          name: "Puja Name",
-        }
-      ]
-    });
-  }, []);
+  // useEffect(() => {
+  //   const printer = new reportPrinter("puja", "A4");
+  //   printer.print({
+  //     templeName: "Test Temple",
+  //     date: new Date(),
+  //     pujas:[
+  //       {
+  //         bookings: [
+  //           {
+  //             devoteeName: "John Doe",
+  //             invoiceNumber: "INV123",
+  //             nakshatra: "Ashwini",
+  //             priestNote: "Priest Note",
+  //             quantity: "12",
+  //           }
+  //         ],
+  //         name: "Puja Name",
+  //       }
+  //     ]
+  //   });
+  // }, []);
 
   return (
     <div className="p-20">
