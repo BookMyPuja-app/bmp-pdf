@@ -5,5 +5,7 @@ const notoSansRegular = "https://res.cloudinary.com/dpaigt2bx/raw/upload/v174342
 const notoSansBold = "https://res.cloudinary.com/dpaigt2bx/raw/upload/v1743431605/NotoSans-Bold_kagtvd.ttf";
 const notoSansSemiBold = "https://res.cloudinary.com/dpaigt2bx/raw/upload/v1743431765/NotoSans-SemiBold_o96oas.ttf";
 const notoSansMalayalamRegular = "https://res.cloudinary.com/dpaigt2bx/raw/upload/v1743427211/NotoSansMalayalam-Regular_dax2it.ttf";
+const manjariRegular = "https://res.cloudinary.com/dpaigt2bx/raw/upload/v1748450359/Manjari-Regular_nrgfti.ttf";
+
 
 export { bmpLogo, robotoNormal, robotoBold, notoSansRegular, notoSansMalayalamRegular, notoSansBold, notoSansSemiBold };

@@ -284,7 +284,7 @@ class reportPrinter<T extends IReportOptions> {
       },
       {
         family: "Noto Sans Malayalam", //Malayalam
-        src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-malayalam@latest/malayalam-400-normal.ttf",
+        src: "https://res.cloudinary.com/dpaigt2bx/raw/upload/v1748450359/Manjari-Regular_nrgfti.ttf",
       },
       {
         family: "Noto Sans Telugu", //Telugu
