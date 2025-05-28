@@ -1,184 +1,11 @@
-"use client";
-
-import React from "react";
-import { Document, Font, Page, Text } from "@react-pdf/renderer";
+import { Document, Font, Page, Text, PDFViewer, Styles } from "@react-pdf/renderer";
+import { Style } from "@react-pdf/types";
 import { maxBy } from "lodash";
-import { ReactNode } from "react";
+import React, { ReactNode, ReactElement } from "react";
 
-type FontFamily = {
-  family: string;
-  src: string;
-};
-
-type LanguageRanges = {
-  [key: string]: RegExp;
-};
-
-type TextParsedProps = {
-  style?: object | object[];
-  children?: ReactNode;
-};
-
-//list of all major language's font families
-const fontFamilies: FontFamily[] = [
-  {
-    family: "Noto Sans SC", // Simplified Chinese
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-serif-sc@latest/chinese-simplified-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Arabic", // arabic , urdu
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-arabic@latest/arabic-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Devanagari", //hindi
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-devanagari@latest/devanagari-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Kannada", //kannada
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-kannada@latest/kannada-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Tamil", //tamil
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-tamil@latest/tamil-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Gurmukhi", //punjabi
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/anek-gurmukhi@latest/gurmukhi-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Lao", //lao
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-lao@latest/lao-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Thai", //thai
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-thai@latest/thai-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Kr", //korean
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-kr@latest/korean-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Bengali", //bengali
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-bengali@latest/bengali-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Cyrillic", //russian
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-kr@latest/cyrillic-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans JP", //japanese
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-jp@latest/japanese-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Greek", //greek
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans@latest/greek-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Latin", //latin
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans@latest/latin-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Myanmar", //Myanmar
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-myanmar@latest/myanmar-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Ethiopic", //Ethiopic
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-ethiopic@latest/ethiopic-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Khmer", //Khmer
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-khmer@latest/khmer-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Armenian", //Armenian
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-armenian@latest/armenian-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Hebrew", //Hebrew
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-hebrew@latest/hebrew-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Georgian", //Georgian
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-georgian@latest/georgian-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Canadian Aboriginal", //Canadian Aboriginal
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-canadian-aboriginal@latest/canadian-aboriginal-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Sinhala", //Sinhala
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-sinhala@latest/sinhala-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Ol Chiki", //Ol Chiki
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-ol-chiki@latest/ol-chiki-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Tibetan", //Tibetan
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-serif-tibetan@latest/tibetan-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Tifinagh", //Tifinagh
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-tifinagh@latest/tifinagh-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Yi", //Yi
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-yi@latest/yi-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Syriac", //Syriac
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-syriac@latest/syriac-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Thaana", //Thaana
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-thaana@latest/thaana-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Vai", //Vai
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-vai@latest/vai-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Cherokee", //Cherokee
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-cherokee@latest/cherokee-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Tai Tham", //Tai Tham
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-tai-tham@latest/tai-tham-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Tai Viet", //Tai Viet
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-tai-viet@latest/tai-viet-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Javanese", //Javanese
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-javanese@latest/javanese-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Gujarati", //Gujarati
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-gujarati@latest/gujarati-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Malayalam", //Malayalam
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-malayalam@latest/malayalam-400-normal.ttf",
-  },
-  {
-    family: "Noto Sans Telugu", //Telugu
-    src: "https://cdn.jsdelivr.net/fontsource/fonts/noto-sans-telugu@latest/telugu-400-normal.ttf",
-  },
-];
-
-//registering all the font families
-fontFamilies.forEach(({ family, src }) =>
-  Font.register({
-    family,
-    src,
-  })
-);
-
-//contains ranges of all the langauges
-const majorLanguagesRanges: LanguageRanges = {
+const majorLanguagesRanges: Record<string, RegExp> = {
   Latin:
-    /[A-Za-z\u00AA\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u02E0-\u02E4\u1D00-\u1D25\u1D2C-\u1D5C\u1D62-\u1D65\u1D6B-\u1D77\u1D79-\u1DBE\u1E00-\u1EFF\u2071\u207F\u2090-\u209C\u212A\u212B\u2132\u214E\u2160-\u2188\u2C60-\u2C7F\uA722-\uA787\uA78B-\uA7CA\uA7D0\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA7FF\uAB30-\uAB5A\uAB5C-\uAB64\uAB66-\uAB69\uFB00-\uFB06\uFF21-\uFF3A\uFF41-\uFF5A]|\uD801[\uDF80-\uDF85\uDF87-\uDFB0\uDFB2-\uDFBA]|\uD837[\uDF00-\uDF1E\uDF25-\uDF2A]/g,
+    /[A-Za-z\u00AA\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02B8\u02E0-\u02E4\u1D00-\u1D25\u1D2C-\u1D5C\u1D62-\u1D65\u1D6B-\u1D77\u1D79-\u1DBE\u1E00-\u1EFF\u2071\u207F\u2090-\u209C\u212A\u212B\u2132\u214E\u2160-\u2188\u2C60-\u2C7F\uA722-\uA787\uA78B-\uA7CA\uA7D0\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA7FF\uAB30-\uAB5A\uAB5C-\uAB64\uAB66-\uAB69\uFB00-\uFB06\uFF21-\uFF3A\uFF41-ｚ]|\uD801[\uDF80-\uDF85\uDF87-\uDFB0\uDFB2-\uDFBA]|\uD837[\uDF00-\uDF1E\uDF25-\uDF2A]/g,
   SC: /[\u2E80-\u2E99\u2E9B-\u2EF3\u2F00-\u2FD5\u3005\u3007\u3021-\u3029\u3038-\u303B\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFA6D\uFA70-\uFAD9]|\uD81B[\uDFE2\uDFE3\uDFF0\uDFF1]|[\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883\uD885-\uD887][\uDC00-\uDFFF]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF39\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A\uDF50-\uDFFF]|\uD888[\uDC00-\uDFAF]/g,
   Cyrillic:
     /[\u0400-\u0484\u0487-\u052F\u1C80-\u1C88\u1D2B\u1D78\u2DE0-\u2DFF\uA640-\uA69F\uFE2E\uFE2F]|\uD838[\uDC30-\uDC6D\uDC8F]/g,
@@ -228,22 +55,26 @@ const majorLanguagesRanges: LanguageRanges = {
   Gujarati:
     /[\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AF1\u0AF9-\u0AFF]/g,
   Malayalam:
-    /[\u0D00-\u0D0C\u0D0E-\u0D10\u0D12-\u0D44\u0D46-\u0D48\u0D4A-\u0D4F\u0D54-\u0D63\u0D66-\u0D7F]/g,
+    /[\u0D00-\u0D03\u0D05-\u0D39\u0D3A\u0D3B\u0D3E-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D57\u0D60-\u0D63\u0D66-\u0D6F\u0D70-\u0D7F]/g,
   Gurmukhi:
     /[\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A76]/g,
 };
 
-//detecting languages and applying corresponding font family
-const TextParsedAfterDetectingLanguage = ({ style = [], children }: TextParsedProps) => {
+interface TextParsedAfterDetectingLanguageProps {
+  style?: Style | Style[];
+  children?: ReactNode;
+}
+
+const TextParsedAfterDetectingLanguage: React.FC<TextParsedAfterDetectingLanguageProps> = ({ style = {}, children }) => {
   const detectScript = (char: string): string => {
-    const [script] = maxBy(
+    const entry = maxBy(
       Object.entries(majorLanguagesRanges),
-      ([_, test]) => {
+      ([_, test]: [string, RegExp]) => {
         const match = char.match(test);
         return match ? match.length : 0;
       }
-    ) || ["Latin"];
-    return script;
+    );
+    return entry ? entry[0] : "Latin";
   };
 
   //checks if children is a date
@@ -265,8 +96,8 @@ const TextParsedAfterDetectingLanguage = ({ style = [], children }: TextParsedPr
     });
   }
 
-  const splitTextByScript = (text: string): { text: string; script: string }[] => {
-    const parts: { text: string; script: string }[] = [];
+  const splitTextByScript = (text: string): { text: string; script: string | null }[] => {
+    const parts: { text: string; script: string | null }[] = [];
     let currentScript: string | null = null;
     let currentPart = "";
 
@@ -276,7 +107,7 @@ const TextParsedAfterDetectingLanguage = ({ style = [], children }: TextParsedPr
 
       if (script !== currentScript) {
         if (currentPart)
-          parts.push({ text: currentPart, script: currentScript as string });
+          parts.push({ text: currentPart, script: currentScript });
         currentScript = script;
         currentPart = char;
       } else {
@@ -284,16 +115,16 @@ const TextParsedAfterDetectingLanguage = ({ style = [], children }: TextParsedPr
       }
     }
 
-    if (currentPart) parts.push({ text: currentPart, script: currentScript as string });
+    if (currentPart) parts.push({ text: currentPart, script: currentScript });
 
     return parts;
   };
 
-  let finalText: ReactNode[] = [];
+  let finalText: ReactElement[] = [];
 
   // Handle the case when children is a string and not a date
-  if (children && !Array.isArray(children) && !containsDate(children as string)) {
-    const textParts = splitTextByScript(children as string);
+  if (children && typeof children === 'string' && !Array.isArray(children) && !containsDate(children)) {
+    const textParts = splitTextByScript(children);
 
     textParts.forEach((part, index) => {
       const fontFamily =
@@ -309,10 +140,16 @@ const TextParsedAfterDetectingLanguage = ({ style = [], children }: TextParsedPr
     });
   }
 
-  //if style already is an array , we will simply initialize finalStyles with it
-  //otherwise , it would be an object and we can simply push it into an empty array
-  let finalStyles = Array.isArray(style) ? style : [style];
-  finalStyles.push({ fontFamily: "Noto Sans" });
+  let finalStyles: Style[] = [];
+  const defaultStyle: Style = { fontFamily: "Noto Sans" };
+
+  if (Array.isArray(style)) {
+    finalStyles = [...style, defaultStyle];
+  } else if (style && Object.keys(style).length > 0) {
+    finalStyles = [style, defaultStyle];
+  } else {
+    finalStyles = [defaultStyle];
+  }
 
   return (
     <Text style={finalStyles}>{finalText?.length ? finalText : children}</Text>

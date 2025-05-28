@@ -1,4 +1,5 @@
-import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Image, Page, View } from "@react-pdf/renderer";
+import Text from "../../components/Text";
 import React from "react";
 import { bmpLogo } from "../../constants";
 import { IPuja } from "./A4PujaList";
@@ -219,7 +220,7 @@ const A4CombinedReport = ({
                             borderBottom: "none",
                           }}
                         >
-                          {puja.name} - {puja.bookings.length}
+                          {`${puja.name} - ${puja.bookings.length}`}
                         </Text>
                       </View>
                       <View

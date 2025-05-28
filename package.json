@@ -6,9 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pdf": "cd package && npm run build && cd .. && npm run dev"
   },
   "dependencies": {
+    "@bookmypuja-tech/bmp-pdf": "file:package",
     "@react-pdf/renderer": "^4.3.0",
     "@types/lodash": "^4.17.16",
     "lodash": "^4.17.21",

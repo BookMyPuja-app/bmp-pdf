@@ -10,3 +10,5 @@ The library exports 2 functions
 - `printTotalReceipt2Inch`
 
 both these functions will initate the rawbt print process when hit, provided you have passed the required arguments.
+
+
