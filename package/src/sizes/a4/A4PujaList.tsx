@@ -1,4 +1,5 @@
-import { Document, Font, Image, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Font, Image, Page, View } from "@react-pdf/renderer";
+import Text from "../../components/Text";
 import React from "react";
 import { bmpLogo } from "../../constants";
 
@@ -213,7 +214,7 @@ const A4PujaList = ({
                           borderBottom: "none",
                         }}
                       >
-                        {puja.name} - {puja.bookings.length}
+                        {`${puja.name} - ${puja.bookings.length}`}
                       </Text>
                     </View>
                     <View

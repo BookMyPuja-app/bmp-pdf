@@ -1,4 +1,5 @@
-import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
+import { Document, Image, Page, View } from "@react-pdf/renderer";
+import Text from "../../components/Text";
 import React from "react";
 import { bmpLogo } from "../../constants";
 

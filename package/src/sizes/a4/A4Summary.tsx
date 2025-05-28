@@ -5,13 +5,12 @@
 import React from "react";
 import {
   Page,
-  Text,
   Document,
   StyleSheet,
   Image,
   View,
 } from "@react-pdf/renderer";
-
+import Text from "../../components/Text";
 import { bmpLogo } from "../../constants";
 
 interface ISummaryPuja {
@@ -89,7 +88,7 @@ const A4Summary = ({
                         borderBottom: "none",
                       }}
                     >
-                      {item.name} - {item.totalCount}
+                      {`${item.name} - ${item.totalCount}`}
                     </Text>
                   </View>
                   <View
